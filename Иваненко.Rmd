@@ -1,0 +1,63 @@
+
+setwd('/D/Desktop')
+data <- read.csv('rus.journ.csv', sep = ';')
+head(data)
+
+library(dplyr)
+data %>% select(LemmaTranslit) %>%
+     group_by(LemmaTranslit) %>% 
+     mutate(LemmaTranslit.count = n())%>%
+     arrange(desc(LemmaTranslit.count = n()))
+     sort(LemmaTranslit.count, decreasing = FALSE)
+     
+    
+2. Cделать график, отражающий корреляцию между 3 столбцом и 12 столбцом.
+
+
+plot(factor(data$MoodTense),factor(data$Aspect), xlab = 'MoodTense', ylab = 'Aspect', col = c('#2F4F4F', '#FFF8DC'))
+
+3.Сделать график, отражающий корреляцию между 4 столбцом и 12 столбцом.
+
+
+plot(factor(data$Trans),factor(data$Aspect), xlab = 'Trans', ylab = 'Aspect', col = c('#CF7BC5', '#FFF8DC'))
+
+
+4.Сделать график, отражающий корреляцию между 6 столбцом и 12 столбцом.
+
+df2 <- data %>%
+   filter(data$VoicePartcp == 'pass' | data$VoicePartcp == 'act' )
+plot(factor(df2$VoicePartcp),factor(df2$Aspect), xlab = 'VoicePartcp', ylab = 'Aspect')
+
+
+5. Сделать график, показывающий корреляцию между значениями pass (6 столбик), которым соответствуют значения past (14 столбик), и значениями столбика 12. 
+
+library(dplyr)
+df1 <- data %>%
+   filter(data$VoicePartcp == 'pass' & data$Tense == 'past' )
+plot(factor(df1$VoicePartcp),factor(df1$Aspect), xlab = 'VoicePartcp', ylab = 'Aspect', col = c('#7FBB95', '#FFF8DC'))
+
+
+6.Сделать график, отражающий корреляцию между 10 столбцом и 12 столбцом.
+
+
+df3 <- data %>%
+   filter(data$Long == 'long' | data$Long == 'short' )
+plot(factor(df3$Long),factor(df3$Aspect), col = c('#E19F59', '#D9FFFA'))
+
+
+7.Соединить значения 7 и 9 столбцов, сделать график, который покажет для этого объединения корреляцию с 12 столбцом
+
+
+data$Person[data$Person == ""] <- data$Gender[data$Person == ""] 
+df4 <- data %>%
+   filter(data$Person != "" )  %>%
+print()
+plot(factor(df4$Person),factor(df4$Aspect), xlab = 'Person', ylab = 'Aspect', col = c('#8F5D73', '#FFF8DC'))
+
+
+
+
+
+
+
+
